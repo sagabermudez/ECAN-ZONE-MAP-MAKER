@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ECAN Zone Locator</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="Input-Container">
+
+        <div class="Input">
+            <div class="input-container">
+                <h1>ECAN Zone Locator for Dr. Jose P. Rizal, Palawan</h1>
+                <h3>Hello! This web map was created to help users easily check which ECAN zone a specific location falls
+                    under within the Municipality of Dr. Jose P. Rizal, Palawan.</h3>
+                <br>
+                <label>Project:</label>
+                <input type="text" id="projectInput" list="projectList" placeholder="Enter Project Name"><br>
+                <datalist id="projectList"></datalist>
+
+                <label>Project Location:</label>
+                <input type="text" id="locationInput" list="locationList" placeholder="Enter Location"><br>
+                <datalist id="locationList"></datalist>
+
+                <label>Latitude:</label>
+                <input type="text" id="latitudeInput" list="latitudeList" placeholder="e.g. 10.123"><br>
+                <datalist id="latitudeList"></datalist>
+
+                <label>Longitude:</label>
+                <input type="text" id="longitudeInput" list="longitudeList" placeholder="e.g. 123.456"><br>
+                <datalist id="longitudeList"></datalist>
+
+
+                <button onclick="applyInput()">Apply</button>
+                <button onclick="printA4()">Print PDF</button>
+
+                <h3>Webmap made by Alexis S. Bermudez</h3>
+                <form autocomplete="on">
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="A4-Paper">
+        <div id="map">
+
+            <img src="Images/LOCATION.png" alt="minimap" class="minimap-img" />
+
+            <div class="map-details">
+
+                <div class="given-details">
+                    <strong>Project:</strong>
+                    <br>
+                    <strong>Project Location:</strong>
+                    <br>
+                    <strong>Coordinates:</strong>
+
+                </div>
+                <div class="input-details">
+                    <strong><span id="projectOutput"></span></strong><br>
+                    <strong><span id="locationOutput"></span></strong><br>
+                    <strong><span id="coordinatesOutput"></strong></span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="sections">
+            <div class="Legend">
+                <strong>LEGEND</strong>
+                <br>
+                <br>
+                <div class="legend-item">
+                    &nbsp;&nbsp;<span class="circle-symbol project"></span>&nbsp;Project
+                </div>
+
+                <div class="legend-item">
+                    <span class="color-box boundaries"></span>Barangay Boundaries
+                </div>
+
+                <div class="legend-item">
+                    <span class="color-box MMPL"></span>MMPL
+                </div>
+
+                <div class="legend-item">
+                    <span class="color-box CADT"></span>CADT
+                </div>
+
+                <!-- <div class="legend-item">
+                    <span class="color-box CADC"></span>CADC
+                </div> -->
+
+                <div class="legend-item">
+                    <span class="hatch-symbol mangrove"></span>Mangrove
+                </div>
+
+                <strong>ECAN ZONATION</strong>
+                <br>
+                <div class="legend-item">
+                    <span class="color-box core"></span>Core Zone
+                </div>
+                <div class="legend-item">
+                    <span class="color-box restricted"></span>Restricted Use Zone
+                </div>
+                <div class="legend-item">
+                    <span class="color-box controlled"></span>Controlled Use Zone
+                </div>
+                <div class="legend-item">
+                    <span class="color-box traditional"></span>Traditional Use Zone
+                </div>
+                <div class="legend-item">
+                    <span class="color-box multiple"></span>Multiple Use Zone
+                </div>
+
+            </div>
+            <div class="Information">
+                <strong>ENVIRONMENTAL CRITICAL AREAS NETWORK (ECAN) MAP</strong>
+                <br>
+                PCSD Resolution No. _____
+                <br>
+                <br>
+                <img src="Images/Compass.png" alt="Information" class="Information-img" />
+                <br>
+                <strong>Municipality of Dr. Jose P. Rizal<br> Province of Palawan<br><br></strong>
+
+                <style>
+                    .scale-container {
+                        font-family: sans-serif;
+                        font-size: 12px;
+                        margin-top: 10px;
+                        display: inline-block;
+                    }
+
+                    .scale-bar-wrapper {
+                        position: relative;
+                        width: 29mm;
+                        height: 10px;
+                        margin-bottom: 4px;
+                    }
+
+                    .scale-bar {
+                        width: 100%;
+                        height: 5px;
+                        background-color: rgb(202, 202, 202);
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+
+                    .dot {
+                        width: 6px;
+                        height: 6px;
+                        background-color: black;
+                        border-radius: 50%;
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+
+                    .dot.start {
+                        left: 0;
+                    }
+
+                    .dot.middle {
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+
+                    .dot.end {
+                        right: 0;
+                    }
+
+                    .label {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 29mm;
+                    }
+                </style>
+
+                <div class="scale-container">
+
+                    <div id="leaflet-scale-holder"></div>
+
+                </div>
+                <br>
+
+
+
+                <br>
+                Transverse Mercator Projection<br>
+                WGS 84 / UTM zone 50N
+            </div>
+            <div class="Disclaimer">
+                Source of Information:<br>
+                <br>
+                ECAN: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <strong>PCSD<br></strong>
+                Administrative Boundary:
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <strong>PPDO<br></strong>
+                <br>
+
+
+                Notes:<br>
+                <br>
+                Boundaries are not authoritative. Information on updated boundaries may be acquired from the respective
+                source of information.
+                <br>
+                <br>
+                Users noting errors and omissions on this map are requested to inform the Palawan Council for
+                Sustainable Development Staff.
+                <br>
+                <br>
+                Reproduction in any form or by any means for commercial purposes is prohibited without written approval
+                from PCSDS.
+                <br>
+                <br>
+                <!-- <h6>This map was produced using a web map developed by Alexis S. Bermudez. </h6> -->
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.graticule/Leaflet.Graticule.js"></script>
+    <script src="https://unpkg.com/leaflet.pattern/dist/leaflet.pattern.min.js"></script>
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/togeojson@0.16.0/togeojson.js"></script>
+
+
+
+</body>
+
+</html>

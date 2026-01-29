@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "CAMPAL",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1 }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 117.587175, 8.929852222 ], [ 117.6147044, 8.951778889 ], [ 117.6243089, 8.953800278 ], [ 117.6694711, 8.990548333 ], [ 117.6633283, 8.967133889 ], [ 117.7171875, 8.894034722 ], [ 117.6749092, 8.851519167 ], [ 117.587175, 8.929852222 ] ] ] ] } }
+]
+}

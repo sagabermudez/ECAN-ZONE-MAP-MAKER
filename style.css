@@ -1,0 +1,300 @@
+body {
+    background: #ccc;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.A4-Paper {
+    width: 210mm;
+    height: 297mm;
+    background: white;
+    position: relative;
+    overflow: visible;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    padding: 5mm;
+}
+
+.map-details {
+    width: 130mm;
+    height: 20mm;
+    background: rgb(255, 255, 255);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 10mm;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+}
+
+.middle-marker {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+}
+
+.input-details {
+    margin-left: 20px;
+}
+
+
+
+.Input-Container {
+    width: 210mm;
+    height: 297mm;
+    background: #fdfdfd00;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    padding: 20mm;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.Input {
+    background: #ffffffdd;
+    border: 1px solid #bdbdbd;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 10mm;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+}
+
+.input-container input {
+    width: 100%;
+    height: 6mm;
+    margin-bottom: 12px;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-container label{
+    font-weight: bold;
+}
+
+.input-container input:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    outline: none;
+}
+
+.input-container button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.input-container button:hover {
+    background-color: #45a049;
+}
+
+
+#map {
+    flex: 1;
+    height: 200mm;
+    width: 100%;
+    border: 2px solid #000000;
+}
+
+.sections {
+    display: flex;
+    flex-direction: row;
+    margin-top: 5mm;
+    width: 100%;
+    height: 82mm;
+    background-color: #ff000000;
+    border: #999;
+    gap: 5mm;
+}
+
+.Legend,
+.Information,
+.Disclaimer {
+    border: 2px solid #000000;
+    background: #0084ff00;
+    font-size: 12px;
+    width: 250px;
+    padding: 2mm;
+}
+
+.Information {
+    text-align: center;
+}
+
+.Information-img {
+    width: 35%;
+    display: flex;
+    margin: 0 auto;
+    /* center horizontally */
+}
+
+.minimap {
+    text-align: left;
+}
+
+.minimap-img {
+    width: 50mm;
+    height: auto;
+    display: flex;
+    z-index: 100000;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+    border-top: 2px solid #000000;
+    border-left: 2px solid #000000;
+    z-index: 1000;
+    position: absolute;
+    margin-left: 9px;
+    margin-top: 9px;
+}
+
+.Disclaimer {
+    font-style: italic;
+    text-align: justify;
+    font-size: 11px;
+}
+
+.wline {
+    display: inline-block;
+    border: 1px solid #33333300;
+    width: 20mm;
+}
+
+.line {
+    display: inline-block;
+    border: 1px solid #333;
+    width: 27.5mm;
+    margin-bottom: 3px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.color-box {
+    width: 20px;
+    height: 10px;
+    margin-right: 5px;
+    display: inline-block;
+    border: 1px solid #333;
+}
+
+.circle-symbol {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    display: inline-block;
+    border-radius: 50%;
+    /* Makes it a circle */
+    border: 2px solid #000000;
+}
+
+/* Customize the color of the project symbol */
+.project {
+    background-color: #ffffff;
+    /* green */
+}
+
+.hatch-symbol {
+    width: 20px;
+    height: 10px;
+    margin-right: 8px;
+    display: inline-block;
+    border: 2px solid red;
+    background-color: rgba(255, 0, 0, 0.356);
+}
+ 
+
+.MMPL {
+    background-color: #5500c500;
+    border: 3px solid #480064ff;
+}
+
+.boundaries {
+    background-color: #00000000;
+    border: 2px solid #000000;
+}
+
+
+.CADT {
+    background-color: #ff000400;
+    border: 3px solid #01f3d3ff;
+}
+
+.CADC {
+    background-color: #ff000400;
+    border: 3px solid #0685daff;
+}
+
+.core {
+    background-color: #ff0004;
+}
+
+.restricted {
+    background-color: #1100ff;
+}
+
+.controlled {
+    background-color: #00df00;
+}
+
+.traditional {
+    background-color: #795329;
+}
+
+.multiple {
+    background-color: #ffee00;
+}
+
+/* Scale control container */
+.leaflet-control-scale {
+  background: rgba(255, 255, 255, 0);
+  font-family: "Times New Roman", serif;
+  font-size: 12px;
+}
+
+/* Individual scale lines */
+.leaflet-control-scale-line {
+  border: px solid #000 !important;
+  border-top: none !important;
+  color: #000;
+  font-weight: bold;
+  background: transparent !important;
+  line-height: 1.1;
+}
+
+.scale-container {
+  font-family: "Times New Roman", serif;
+  font-size: 12px;
+}
+
+#leaflet-scale-holder .leaflet-control-scale {
+  position: static;       /* IMPORTANT */
+}
+
+#leaflet-scale-holder .leaflet-control-scale-line {
+  border: 1px solid #000;
+  border-top: none;
+  background: none;
+  font-weight: bold;
+}
