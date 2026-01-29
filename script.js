@@ -7,7 +7,8 @@ const map = L.map('map', {
     scrollWheelZoom: true,
     doubleClickZoom: false,
     boxZoom: false,
-    touchZoom: false
+    touchZoom: false,
+    preferCanvas: true
 }).setView([8.856578, 117.497406], 13);
 
 const svgDefs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
@@ -297,47 +298,75 @@ map.on('click', function (e) {
 });
 
 
-function printA4() {
+async function printA4() {
     const a4Content = document.querySelector('.A4-Paper');
-    const mapContainer = a4Content.querySelector('.leaflet-container');
 
-    const printWindow = window.open('', '_blank');
-    printWindow.document.write(`
-        <html>
+    try {
+        // 1. Generate the canvas
+        const canvas = await html2canvas(a4Content, {
+            useCORS: true,
+            scale: 5, // High resolution
+            logging: false
+        });
+
+        // 2. Convert canvas to a Blob (Binary Large Object)
+        canvas.toBlob((blob) => {
+            if (blob) {
+                // 3. Create a unique URL for the image file
+                const url = URL.createObjectURL(blob);
+                
+                // 4. Open the image in a new tab
+                const newTab = window.open();
+                if (newTab) {
+                    newTab.document.write(`
+                        <html>
         <head>
-            <title>Print</title>
-            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+            <title>Image Preview</title>
             <style>
                 body {
                     margin: 0;
-                    padding: 0;
-                    background: white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center; /* Vertically center if image is small */
+                    background: #525659;
+                    min-height: 100vh;
+                    overflow: auto;
                 }
-
-                @media print {
-                    body {
-                        -webkit-print-color-adjust: exact;
-                        print-color-adjust: exact;
-                    }
+                img {
+                    /* Responsive constraints */
+                    max-width: 95%;      /* Leave a small gap at the sides */
+                    max-height: 95vh;    /* Leave a small gap at top/bottom */
+                    
+                    /* Prevent stretching */
+                    width: auto;
+                    height: auto;
+                    object-fit: contain; 
+                    
+                    /* Aesthetics */
+                    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+                    background-color: white; /* Behind the image in case of transparency */
+                    margin: 20px;
                 }
-
-                ${getAllStyleRules()}
             </style>
         </head>
         <body>
-            ${a4Content.outerHTML}
-            <script>
-                window.onload = function () {
-                    window.print();
-                    window.onafterprint = function () {
-                        window.close();
-                    }
-                }
-            <\/script>
+            <img src="${url}" alt="A4 Map Export" />
         </body>
-        </html>
-    `);
-    printWindow.document.close();
+    </html>
+                    `);
+                    newTab.document.close();
+                } else {
+                    alert("Please allow popups to view the image.");
+                }
+
+                // Clean up the memory after a delay
+                setTimeout(() => URL.revokeObjectURL(url), 10000);
+            }
+        }, 'image/png');
+
+    } catch (error) {
+        console.error("Error generating image preview:", error);
+    }
 }
 
 function getAllStyleRules() {
@@ -354,17 +383,4 @@ function getAllStyleRules() {
     return cssText;
 }
 
-function saveAsImage() {
-    const element = document.querySelector('.A4-Paper');
-    const map = window.map; // Replace with your Leaflet map variable name if different
-
-    // Wait until all tiles are loaded
-    if (map._tilesToLoad > 0) {
-        map.once('load', () => {
-            captureWithHtml2Canvas(element);
-        });
-    } else {
-        captureWithHtml2Canvas(element);
-    }
-}
 

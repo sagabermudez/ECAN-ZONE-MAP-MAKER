@@ -20,7 +20,8 @@ body {
     width: 130mm;
     height: 20mm;
     background: rgb(255, 255, 255);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    border: 2px solid #000000;
+    box-shadow: 1 0 10px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
     padding: 8px 12px;
     position: absolute;
@@ -304,54 +305,43 @@ body {
   body {
     flex-direction: column;  /* stack vertically */
     align-items: center;
-    padding: 1rem;
+    padding: 0rem;
   }
 
   .Input-Container {
-    width: 90%; /* fit phone screen */
+    width: 210mm; /* fit phone screen */
     height: auto; /* let content define height */
-    margin-bottom: 20px; /* space between input and paper */
+    margin:10px auto;
     padding: 10px;
+    max-width: 95vw;
   }
 
   .A4-Paper {
-    width: 210mm;             /* original width */
-    max-width: 95vw;          /* shrink to fit screen width */
-    aspect-ratio: 210 / 297;  /* maintain A4 ratio */
-    height: auto;             /* height adjusts automatically */
+    width: 210mm;
+    height: 297mm; /* Lock height for true A4 */
     background: white;
     position: relative;
     overflow: visible;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
     padding: 5mm;
-}
+    
+    /* Responsive scaling for display only */
+    
+    height: auto; 
+    aspect-ratio: 210 / 297;
+    margin: 20px auto;
+    
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 850px) {
+  
   .A4-Paper {
-    width: 100%;          /* optional: fit screen */
-    height: auto;
-    overflow: hidden;
-    position: relative;
+    left: -9000px;
+    top: 0px;
+    position: absolute;
+
   }
 
-  .minimap-img {
-    display: none !important;
-  }
-
-  /* Hide all children except the map */
-  .A4-Paper > *:not(#map) {
-    display: none !important;
-  }
-
-  /* Make the map take full space of the A4 container */
-  #map {
-    width: 100%;             /* fill width of parent */
-    aspect-ratio: 210 / 297; /* maintain A4 ratio */
-    max-height: 100%;        /* don't exceed parent height */
-    border: 2px solid #000;
-    box-sizing: border-box;
 }
 }
-
