@@ -298,3 +298,60 @@ body {
   background: none;
   font-weight: bold;
 }
+
+/* For mobile/small screens */
+@media screen and (max-width: 1350px) {
+  body {
+    flex-direction: column;  /* stack vertically */
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .Input-Container {
+    width: 90%; /* fit phone screen */
+    height: auto; /* let content define height */
+    margin-bottom: 20px; /* space between input and paper */
+    padding: 10px;
+  }
+
+  .A4-Paper {
+    width: 210mm;             /* original width */
+    max-width: 95vw;          /* shrink to fit screen width */
+    aspect-ratio: 210 / 297;  /* maintain A4 ratio */
+    height: auto;             /* height adjusts automatically */
+    background: white;
+    position: relative;
+    overflow: visible;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    padding: 5mm;
+}
+}
+
+@media screen and (max-width: 900px) {
+  .A4-Paper {
+    width: 100%;          /* optional: fit screen */
+    height: auto;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .minimap-img {
+    display: none !important;
+  }
+
+  /* Hide all children except the map */
+  .A4-Paper > *:not(#map) {
+    display: none !important;
+  }
+
+  /* Make the map take full space of the A4 container */
+  #map {
+    width: 100%;             /* fill width of parent */
+    aspect-ratio: 210 / 297; /* maintain A4 ratio */
+    max-height: 100%;        /* don't exceed parent height */
+    border: 2px solid #000;
+    box-sizing: border-box;
+}
+}
+
