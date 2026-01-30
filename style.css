@@ -228,7 +228,7 @@ body {
 
 .MMPL {
     background-color: #5500c500;
-    border: 3px solid #480064ff;
+    border: 3px dashed rgb(157, 6, 218);
 }
 
 .boundaries {
@@ -239,7 +239,7 @@ body {
 
 .CADT {
     background-color: #ff000400;
-    border: 3px solid #01f3d3ff;
+    border: 3px dashed rgb(173, 0, 0);
 }
 
 .CADC {

@@ -199,7 +199,7 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
     L.geoJSON(data, {
       style: {
         pane: '2',
-        color: '#9d06daff',
+        color: 'rgb(157, 6, 218)',
         dashArray: '10, 7',   // ← dash length, gap length
         weight: 5,
         fillColor: '#66b3ff05',
