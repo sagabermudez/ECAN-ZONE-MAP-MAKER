@@ -369,6 +369,38 @@ async function printA4() {
     }
 }
 
+async function downloadA4() {
+  const a4Content = document.querySelector('.A4-Paper');
+
+  try {
+    const canvas = await html2canvas(a4Content, {
+      useCORS: true,
+      scale: 5,
+      logging: false
+    });
+
+    canvas.toBlob((blob) => {
+      if (!blob) return;
+
+      const url = URL.createObjectURL(blob);
+
+      // ✅ Download instead of opening new tab
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "A4-Map.png";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    }, "image/png");
+
+  } catch (error) {
+    console.error("Error generating image preview:", error);
+  }
+}
+
+
 function getAllStyleRules() {
     let cssText = '';
     for (let sheet of document.styleSheets) {
