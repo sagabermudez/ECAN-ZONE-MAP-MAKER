@@ -36,8 +36,9 @@ if (svg) {
 }
 
 // Add tile layer
-L.tileLayer('', {
-    attribution: '&copy; OpenStreetMap contributors'
+L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+    attribution: '&copy; Google Maps'
 }).addTo(map);
 
 L.control.scale({
@@ -87,9 +88,10 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
     L.geoJSON(data, {
       pane: '1',
       style: {
-        color: '#000000ff',
-        weight: 1.5,
-        fillColor: '#66b3ff05',
+        color: 'rgb(0, 0, 0)',
+        opacity: .1,
+        weight: 2,
+        fillColor: '#36363600',
         fillOpacity: 0.3,
       }
     }).addTo(map);
@@ -102,7 +104,7 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '2',
         style: {
         color: '#ff0000ff',
-        weight: 2,
+        weight: .5,
         fillColor: '#ff0000ff',
         fillOpacity: 0.5
       }
@@ -130,9 +132,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: '#ff0004',
-        weight: 1,
+        weight: .7,
         fillColor: '#ff0004',
-        fillOpacity: 1
+        fillOpacity: .7
       }
     }).addTo(map);
   });
@@ -144,9 +146,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: 'blue',
-        weight: 1,
+        weight: .7,
         fillColor: 'blue',
-        fillOpacity: 1
+        fillOpacity: .7
       }
     }).addTo(map);
   });
@@ -158,9 +160,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: '#00df00',
-        weight: 1,
+        weight: .7,
         fillColor: '#00df00',
-        fillOpacity: 1
+        fillOpacity: .7
       }
     }).addTo(map);
   });
@@ -172,9 +174,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: '#75542fff',
-        weight: 1,
+        weight: .7,
         fillColor: '#75542fff',
-        fillOpacity: 1
+        fillOpacity: .7
       }
     }).addTo(map);
   });
@@ -186,9 +188,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: 'yellow',
-        weight: 1,
+        weight: .7,
         fillColor: 'yellow',
-        fillOpacity: 1
+        fillOpacity: .7
       }
     }).addTo(map);
   });
@@ -273,8 +275,8 @@ function applyInput() {
 // Add Point Button Logic
 document.getElementById('addPointBtn').addEventListener('click', function () {
     addPointMode = !addPointMode;
-    this.textContent = addPointMode ? '✅ Click on Map' : '➕ Add Point';
-    this.style.backgroundColor = addPointMode ? '#d4f1d4' : 'white';
+    this.textContent = addPointMode ? 'Click on Map' : 'Add Point';
+    this.style.backgroundColor = addPointMode ? '#4caf50' : '#4caf50';
 });
 
 // Handle map click to add point
@@ -292,8 +294,8 @@ map.on('click', function (e) {
         // Turn off add mode
         addPointMode = false;
         const btn = document.getElementById('addPointBtn');
-        btn.textContent = '➕ Add Point';
-        btn.style.backgroundColor = 'white';
+        btn.textContent = 'Add Point';
+        btn.style.backgroundColor = '#4caf50';
     }
 });
 
@@ -414,5 +416,72 @@ function getAllStyleRules() {
     }
     return cssText;
 }
+// 1. Ensure the upload pane exists (Place this near your other map.createPane calls)
+if (!map.getPane("uploadPane")) {
+    map.createPane("uploadPane");
+    map.getPane("uploadPane").style.zIndex = 450; 
+}
 
+let uploadedLayer = null; 
 
+// 2. Attach the event listener for the file input
+document.getElementById('geojsoupload').addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith('.geojson') && !file.name.toLowerCase().endsWith('.json')) {
+        alert("Please upload a valid GeoJSON file.");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+        try {
+            const geoData = JSON.parse(event.target.result);
+
+            // Remove previous uploaded layer if it exists
+            if (uploadedLayer) {
+                map.removeLayer(uploadedLayer);
+            }
+
+            // Add new GeoJSON layer
+            uploadedLayer = L.geoJSON(geoData, {
+                pane: "uploadPane",
+                style: function () {
+                    return {
+                        color: "#000000",
+                        weight: 3,
+                        fillColor: "#3388ff",
+                        fillOpacity: 0
+                    };
+                },
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 6,
+                        color: "#ff0000",
+                        fillColor: "#ff0000",
+                        fillOpacity: 0.8
+                    });
+                },
+                onEachFeature: function (feature, layer) {
+                    if (feature.properties) {
+                        const popupContent = Object.entries(feature.properties)
+                            .map(([k, v]) => `<strong>${k}:</strong> ${v}`)
+                            .join("<br>");
+                        layer.bindPopup(popupContent);
+                    }
+                }
+            }).addTo(map);
+
+            // Zoom map to the uploaded data
+            if (uploadedLayer.getBounds().isValid()) {
+                map.fitBounds(uploadedLayer.getBounds());
+            }
+
+        } catch (err) {
+            console.error("GeoJSON Parse Error:", err);
+            alert("Error parsing GeoJSON: " + err.message);
+        }
+    };
+    reader.readAsText(file);
+});
