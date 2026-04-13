@@ -34,12 +34,17 @@
                 <label>Longitude:</label>
                 <input type="text" id="longitudeInput" list="longitudeList" placeholder="e.g. 123.456"><br>
                 <datalist id="longitudeList"></datalist>
+                
+                <label for="geojsoupload">Upload GeoJSON:</label>
+                <input type="file" id="geojsoupload" accept=".geojson,.json"><br>
 
-
+                <button id="addPointBtn">Add Point</button>    
                 <button onclick="applyInput()">Apply</button>
                 <button onclick="printA4()">Preview</button>
                 <button onclick="downloadA4()">Download</button>
-
+                
+                 <br><br>
+                
                 <h3>Map Maker made by Alexis S. Bermudez</h3>
                 <form autocomplete="on">
 
@@ -79,8 +84,9 @@
                 <strong>LEGEND</strong>
                 <br>
                 <br>
+                
                 <div class="legend-item">
-                    &nbsp;&nbsp;<span class="circle-symbol project"></span>&nbsp;Project
+                 &nbsp;&nbsp;<span class="circle-symbol project"></span>&nbsp;Project
                 </div>
 
                 <div class="legend-item">
@@ -234,10 +240,11 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet.graticule/Leaflet.Graticule.js"></script>
     <script src="https://unpkg.com/leaflet.pattern/dist/leaflet.pattern.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js"></script>
+    <script src="https://unpkg.com/@tmcw/togeojson@0.15.0/togeojson.js"></script>
     <script src="script.js"></script>
-    <script src="https://unpkg.com/togeojson@0.16.0/togeojson.js"></script>
 
 
 
