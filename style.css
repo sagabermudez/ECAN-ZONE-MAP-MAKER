@@ -206,8 +206,9 @@ body {
     margin-right: 5px;
     display: inline-block;
     border-radius: 50%;
+    
     /* Makes it a circle */
-    border: 2px solid #000000;
+    border: 2px solid rgb(0, 0, 0);
 }
 
 /* Customize the color of the project symbol */
@@ -233,7 +234,8 @@ body {
 
 .boundaries {
     background-color: #00000000;
-    border: 2px solid #000000;
+    border: 2px solid rgb(0, 0, 0);
+    opacity: 0.3;
 }
 
 
@@ -299,6 +301,8 @@ body {
   background: none;
   font-weight: bold;
 }
+
+
 
 /* For mobile/small screens */
 @media screen and (max-width: 1350px) {
