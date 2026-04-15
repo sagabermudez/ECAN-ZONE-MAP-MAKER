@@ -36,10 +36,10 @@ if (svg) {
 }
 
 // Add tile layer
-L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-    subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-    attribution: '&copy; Google Maps'
-}).addTo(map);
+//L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+ //   subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+  //  attribution: '&copy; Google Maps'
+//}).addTo(map);
 
 L.control.scale({
   metric: true,
@@ -132,9 +132,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: '#ff0004',
-        weight: .7,
+        weight: 1,
         fillColor: '#ff0004',
-        fillOpacity: .7
+        fillOpacity: 1
       }
     }).addTo(map);
   });
@@ -146,9 +146,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: 'blue',
-        weight: .7,
+        weight: 1,
         fillColor: 'blue',
-        fillOpacity: .7
+        fillOpacity: 1
       }
     }).addTo(map);
   });
@@ -160,9 +160,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: '#00df00',
-        weight: .7,
+        weight: 1,
         fillColor: '#00df00',
-        fillOpacity: .7
+        fillOpacity: 1
       }
     }).addTo(map);
   });
@@ -174,9 +174,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: '#75542fff',
-        weight: .7,
+        weight: 1,
         fillColor: '#75542fff',
-        fillOpacity: .7
+        fillOpacity: 1
       }
     }).addTo(map);
   });
@@ -188,9 +188,9 @@ fetch('GeoJSON/Rizal_Boundary_4326.geojson')
       pane: '10',
       style: {
         color: 'yellow',
-        weight: .7,
+        weight: 1,
         fillColor: 'yellow',
-        fillOpacity: .7
+        fillOpacity: 1
       }
     }).addTo(map);
   });
